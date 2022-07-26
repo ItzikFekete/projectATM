@@ -1,0 +1,92 @@
+package loginReg;
+import javax.swing.*;
+import java.awt.AWTEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class registrationForm implements ActionListener{
+	
+	JFrame regInput = new JFrame();
+	JTextField  firstNameT, lastNameT, coNameA, address1A, addres2A, cityA, 
+	postCodeA, emailA, phoneA;
+	String[] titleToChoose = { "Mr", "Mrs.", "Ms.", "Master", "Doctor" };
+	JComboBox<String> titleBox = new JComboBox<>(titleToChoose);
+	JButton regButton = new JButton("Register");
+	registrationForm(){
+		JFrame regInput = new JFrame();
+		regInput.setTitle("Registration");
+		//This puts the upper left corner at location (x, y), 
+		//where x the the number of pixels from the left of the screen and y is is the number from the 
+		//top of the screen. 
+		//height and width are as before.
+		titleBox.setSize(300,30);
+		titleBox.setLocation(50, 100);
+		//titleBox.setBounds(30, 30, 120, 30);
+		titleBox.setSelectedIndex(0);
+		titleBox.addActionListener(this);
+		firstNameT = new JTextField("First Name");
+		firstNameT.setSize(100, 20);
+		firstNameT.setLocation(100, 100);
+		//firstNameT.setBounds(200, 30, 120, 30);
+		firstNameT.addActionListener(this);
+		lastNameT= new JTextField("Last Name"); 
+		//lastNameT.setBounds(380, 30, 120, 30);
+		lastNameT.setSize(100, 20);
+		lastNameT.setLocation(100, 200);
+		lastNameT.addActionListener(this);
+		coNameA= new JTextField("Company Name"); 
+		//coNameA.setBounds(30, 80, 250, 30);
+		coNameA.setSize(100, 20);
+		coNameA.setLocation(150, 100);
+		address1A= new JTextField("First line of address"); 
+		//address1A.setBounds(30, 130, 120, 30);
+		address1A.setSize(100, 20);
+		address1A.setLocation(200, 100);
+		addres2A = new JTextField("Second line of address");
+		//addres2A.setBounds(380, 130, 120, 30);
+		addres2A.setSize(100, 20);
+		addres2A.setLocation(200, 200);
+		cityA = new JTextField("City"); 		
+		//cityA.setBounds(30, 190, 120, 30);
+		cityA.setSize(100, 20);
+		cityA.setLocation(250,100 );
+		postCodeA = new JTextField("PostCode"); 
+		//postCodeA.setBounds(380, 190, 120, 30);
+		emailA= new JTextField("Email address"); 
+		//emailA.setBounds(30, 250, 120, 30);
+		phoneA= new JTextField("Phone number");
+		regButton.setText("Register");
+		//regButton.setBounds(100, 300, 120, 150);
+		regButton.setSize(100, 40);
+		regButton.setLocation(450, 150);
+		regInput.add(titleBox);
+		regInput.add(firstNameT);
+		regInput.add(lastNameT);
+		regInput.add(coNameA);
+		regInput.add(address1A);
+		regInput.add(addres2A);
+		regInput.add(cityA);
+		regInput.add(postCodeA);
+		regInput.add(regButton);
+		regInput.setBounds(300, 90, 900, 600);
+		regInput.setResizable(false);
+		regInput.setVisible(true);
+				
+	}
+	
+
+       
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new registrationForm();
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		
+	}
+
+}
