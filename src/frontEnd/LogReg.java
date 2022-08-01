@@ -1,11 +1,14 @@
 package frontEnd;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import backEnd.Model;
 
@@ -18,6 +21,8 @@ public class LogReg extends Model  implements ActionListener {
 	JLabel labelQuestion1, labelQuestion2;
 	// buttons will be to login or register
 	JButton loginButton, registerButton;
+	
+	
 
 	public LogReg() {
 		JFrame firstForm = new JFrame();
@@ -41,16 +46,17 @@ public class LogReg extends Model  implements ActionListener {
 		firstForm.setSize(420, 300);
 		firstForm.setLayout(null);
 		firstForm.setVisible(true);
-
+		
 	}
+	
 
 	@Override
 	public void actionPerformed (ActionEvent e) {
-
-
-
-	}
-
+		if (e.getSource()==registerButton) {
+			System.out.print("Taking to register");
+		}
+		
+		}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

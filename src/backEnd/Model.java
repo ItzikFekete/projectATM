@@ -28,8 +28,8 @@ public class Model {
 			conn = DriverManager.getConnection(url);
 			System.out.println("connection made");
 			Statement st = conn.createStatement();
-			String querie1= "INSERT INTO 'personalInfo'(personal_title ,personal_first_name, "
-					+ "personal_last_name,firstLAdd, secondLAdd, city, postcode, application_Company,"
+			String querie1= "INSERT INTO 'personalInfo'(personalTitle ,personalFirstName, "
+					+ "personalLastMame,PersonallAddressL1, PersonallAddressL2, Personalcity, PersonalPostcode, application_Company,"
 					+ " application_Community, phone, date, month, year, email, password) "
 					+ "VALUES ('title', 'firstNameT', 'lastNameT', 'address1A', 'address2A', 'cityA', 'postCodeA',"
 					+ "'areaCompany', 'areaCommunity', 'phoneA', 'dates', 'months', 'years', 'emailA', 'passwordT')";
