@@ -5,9 +5,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel; 
+import javax.swing.JLabel;
 
-public class LogReg implements ActionListener {
+import backEnd.Model;
+
+
+public class LogReg extends Model  implements ActionListener {
 
 	// Frame is the frame of the first pop up
 	JFrame firstForm = new JFrame();
@@ -43,11 +46,11 @@ public class LogReg implements ActionListener {
 
 	@Override
 	public void actionPerformed (ActionEvent e) {
-		
+
 
 
 	}
-	
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

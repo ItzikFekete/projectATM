@@ -1,26 +1,43 @@
 package frontEnd;
-import javax.swing.*;
+import backEnd.Model;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
- 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.text.ParseException;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import javax.swing.JFormattedTextField.AbstractFormatter;;
 
-public class registrationForm extends LogReg implements ActionListener{
-	
+
+public class RegistrationForm extends LogReg implements ActionListener{
+
 	JFrame regInput = new JFrame();
 	JLabel dob, titleL, companyL ;
-	//private JButton regButton, cancelButton; 
-	JTextField  firstNameT, lastNameT, coNameA, address1A, address2A, cityA, 
-	postCodeA, emailA, phoneA, password;
-	JRadioButton company, individual, community;
-	ButtonGroup groupButton; 
+	//private JButton regButton, cancelButton;
+	JTextField  firstNameT, lastNameT, areaCompany, areaCommunity, address1A, address2A, cityA,
+	postCodeA, emailA, phoneA, passwordT;
 	
+
 	String[] titleToChoose = { "Mr", "Mrs.", "Ms.", "Master", "Doctor" };
+	JComboBox <String> title= new JComboBox<>(titleToChoose);
 	
 	String [] date = {
 			"1", "2", "3", "4", "5","6", "7", "8", "9", "10",
             "11", "12", "13", "14", "15","16", "17", "18", "19", "20",
-            "21", "22", "23", "24", "25","26", "27", "28", "29", "30","31"	
+            "21", "22", "23", "24", "25","26", "27", "28", "29", "30","31"
 	};
 	JComboBox <String> dates= new JComboBox<>(date);
 	String month[]= {
@@ -35,142 +52,174 @@ public class registrationForm extends LogReg implements ActionListener{
 			"2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009"
 	};
 	JComboBox<String> years = new JComboBox<>(year);
-	JButton regButton, cancelButton; 
-	
-	registrationForm(){
+	JButton regButton, cancelButton;
+
+	public RegistrationForm(){
 		JFrame regInput = new JFrame();
 		regInput.setTitle("Registration Form");
 		regInput.setLocation(200,10);
-		
+
 		titleL = new JLabel("Please enter your name");
 		titleL.setSize(200,25);
 		titleL.setLocation(80, 30);
-		JComboBox<String> titleBox = new JComboBox<>(titleToChoose);
-		titleBox.setSize(85,25);
-		titleBox.setLocation(110, 50);
-		titleBox.setSelectedIndex(0);
 		
+		title.setSize(85,25);
+		title.setLocation(110, 50);
+		title.setSelectedIndex(0);
+
 		firstNameT = new JTextField("First Name");
-		firstNameT.setSize(200, 25);
+		firstNameT.setSize(200, 30);
 		firstNameT.setLocation(200, 50);
-		
-		lastNameT= new JTextField("Last Name"); 
-		lastNameT.setSize(200, 25);
+
+		lastNameT= new JTextField("Last Name");
+		lastNameT.setSize(200, 30);
 		lastNameT.setLocation(400, 50);
 		
-		companyL = new JLabel("Please choose");
-		companyL.setSize(200, 25);
-		companyL.setLocation(80, 80);
+		companyL= new JLabel("Please write below your organisation");
+		companyL.setSize(500, 30);
+		companyL.setLocation(90, 80);
 		
-		company = new JRadioButton(); 
-		company.setText("Company");
-		company.setLocation(110, 110);
-		individual = new JRadioButton();
-		individual.setText("Individual");
-		individual.setLocation(150, 110);
-		community= new JRadioButton();
-		community.setText("Community");
-		community.setLocation(190,110);
-		groupButton = new ButtonGroup(); 
+		areaCompany = new JTextField("if Company");
+		areaCompany.setSize(400, 30);
+		areaCompany.setLocation(90, 110);
 		
-		
-		coNameA= new JTextField("Company Name"); 
-		coNameA.setSize(100, 20);
-		coNameA.setLocation(100, 150);
-		
-		address1A= new JTextField("First line of address"); 
-		address1A.setSize(100, 20);
-		address1A.setLocation(100, 200);
-		
+		areaCommunity= new JTextField("If Community");
+		areaCommunity.setSize(400,30);
+		areaCommunity.setLocation(90, 140);
+
+		address1A= new JTextField("First line of address");
+		address1A.setSize(300, 30);
+		address1A.setLocation(90, 180);
+
 		address2A = new JTextField("Second line of address");
-		address2A.setSize(100, 20);
-		address2A.setLocation(500, 200);
-		
-		cityA = new JTextField("City"); 		
-		cityA.setSize(100, 20);
-		cityA.setLocation(100,250 );
-				
-		postCodeA = new JTextField("PostCode"); 
-		emailA= new JTextField("Email address"); 
-		emailA.setSize(100, 20);
-		emailA.setLocation(100, 300);
+		address2A.setSize(350, 30);
+		address2A.setLocation(90, 220);
+
+		cityA = new JTextField("City");
+		cityA.setSize(250, 30);
+		cityA.setLocation(90,250 );
+
+		postCodeA = new JTextField("PostCode");
+		postCodeA.setSize(250, 30);
+		postCodeA.setLocation(350, 250);
+		emailA= new JTextField("Email address");
+		emailA.setSize(250, 30);
+		emailA.setLocation(90, 300);
+		passwordT = new JTextField("please enter your passowrd");
+		passwordT.setSize(250, 30);
+		passwordT.setLocation(400, 300);
 		phoneA= new JTextField("Phone number");
-		phoneA.setSize(100, 20);
-		phoneA.setLocation(100, 350);
+		phoneA.setSize(200, 30);
+		phoneA.setLocation(90, 340);
 		dob = new JLabel("D.O.B.");
 		dob.setFont(new Font("Ariel",Font.PLAIN,15));
-		dob.setSize(100, 20);
-		dob.setLocation(100, 400);
-		
+		dob.setSize(100, 30);
+		dob.setLocation(100, 390);
+
 		dates.setSize(100, 20);
-		dates.setLocation(180, 400);
+		dates.setLocation(180, 390);
 		dates.setSelectedIndex(0);
-		
+
 		months.setSize(100, 20);
-		months.setLocation(250, 400);
-		months.setSelectedIndex(0);
-		
+		months.setLocation(250, 390);
+		months.setSelectedIndex(1);
+
 		years.setSize(100, 20);
-		years.setLocation(350, 400);
-		JButton regButton = new JButton("Register");
+		years.setLocation(350, 390);
+		years.setSelectedIndex(30);
+		regButton = new JButton("Register");
 		regButton.setText("Register");
 		//regButton.setBounds(100, 300, 120, 150);
-		regButton.setSize(100, 40);
+		//regButton.setBounds(0, 0, 600, 400);
+		regButton.setSize(300, 40);
 		regButton.setFont((new Font("Tahoma", Font.BOLD,20)));
-		regButton.setLocation(350, 650);
-		JButton cancelButton = new JButton("Cancel"); 
-		cancelButton.setSize(100, 40);
+		regButton.setLocation(200, 450);
+		cancelButton = new JButton("Cancel");
+		cancelButton.setSize(300, 40);
 		cancelButton.setFont((new Font("Tahoma", Font.BOLD,20)));
-		cancelButton.setLocation(550, 650);
+		cancelButton.setLocation(525,450);
 		regInput.getContentPane();
 		regInput.add(titleL);
-		regInput.add(titleBox);
+		regInput.add(title);
 		regInput.add(firstNameT);
 		regInput.add(lastNameT);
-		regInput.add(titleL);
+		regInput.add(areaCommunity);
+		regInput.add(areaCompany);
 		regInput.add(companyL);
-		regInput.add(company);
-		regInput.add(individual);
-		regInput.add(community); 
-		regInput.add(coNameA);
 		regInput.add(address1A);
 		regInput.add(address2A);
 		regInput.add(cityA);
 		regInput.add(postCodeA);
 		regInput.add(phoneA);
 		regInput.add(emailA);
+		regInput.add(passwordT);
 		regInput.add(dob);
 		regInput.add(dates);
-		regInput.add(months); 
-		regInput.add(years); 
+		regInput.add(months);
+		regInput.add(years);
 		regInput.add(regButton);
 		regInput.add(cancelButton);
 		regInput.setBounds(300, 90, 900, 600);
 		regInput.setLayout(null);
 		regInput.setResizable(false);
 		regInput.setVisible(true);
-				
+		regButton.addActionListener(this);
+		cancelButton.addActionListener(this);
+		
+
+	}
+	public void actionPerformed(ActionEvent e1) {
+		
+		if (e1.getSource()==registerButton) {
+			
+			System.out.print("registered");
+			
+		}else if (e1.getSource()==loginButton) {
+			System.out.println("login");
+			
+		}
+		if (e1.getSource()==regButton) {
+			
+			System.out.println("works");
+			String personal_title = (String) title.getSelectedItem();
+			String personal_first_name = firstNameT.getSelectedText();
+			String personal_last_name = lastNameT.getSelectedText();
+			String firstLAdd = address1A.getSelectedText();
+			String secondLAdd= address2A.getSelectedText();
+			String city = cityA.getSelectedText();
+			String postcode = postCodeA.getSelectedText();
+			String application_Company = areaCompany.getSelectedText(); 
+			String application_Community = areaCommunity.getSelectedText();
+			String phone = phoneA.getSelectedText(); 
+			String date= (String) dates.getSelectedItem();
+			String month = (String) months.getSelectedItem();
+			String year = (String) years.getSelectedItem(); 
+			String email = emailA.getSelectedText();
+			String password = passwordT.getSelectedText(); 
+			//connect(); I tried this
+			regInput.dispose();
+
+		}else if(e1.getSource()==cancelButton) {
+			System.out.println("cancel");
+			
+			}
+		
+		// TODO Auto-generated method stub
+		
+		}
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		new RegistrationForm();
+
+	}
+
+	
+		
+
 	}
 	
 
-       
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		new registrationForm();
 
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getSource()==registerButton) {
-			//regInput.setVisible(true);
-			
-		}else if(e.getSource()==loginButton) {
-			System.out.println("Login");
-		}
-		
-	}
-
-}
