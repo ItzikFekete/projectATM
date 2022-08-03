@@ -7,8 +7,6 @@
     <fullyQualifiedTypeName name="javax.swing.JFormattedTextField"/>
     <fullyQualifiedTypeName name="javax.swing.JFormattedTextField.AbstractFormatter"/>
     <fullyQualifiedTypeName name="org.sqlite.SQLiteDataSource"/>
-    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
-    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="java.util.logging.Logger"/>
     <fullyQualifiedTypeName name="java.awt.Event"/>
     <fullyQualifiedTypeName name="java.sql.Connection"/>
@@ -16,7 +14,12 @@
     <fullyQualifiedTypeName name="java.sql.Statement"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="javax.swing.WindowConstants"/>
-    <fullyQualifiedTypeName name="backEnd.Model"/>
     <fullyQualifiedTypeName name="java.awt.EventQueue"/>
+    <fullyQualifiedTypeName name="java.awt.ActiveEvent"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="backEnd.Model"/>
+    <fullyQualifiedTypeName name="javax.swing.JPasswordField"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 </qualifiedTypeNameHistroy>

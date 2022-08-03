@@ -53,7 +53,7 @@ public class LogReg extends Model  implements ActionListener {
 	@Override
 	public void actionPerformed (ActionEvent e) {
 		if (e.getSource()==registerButton) {
-			System.out.print("Taking to register");
+			System.out.print("Taking to register"); 
 		}
 		
 		}
