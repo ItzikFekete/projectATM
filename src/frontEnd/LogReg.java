@@ -1,19 +1,13 @@
 package frontEnd;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import backEnd.Model;
 
 
-public class LogReg extends Model  implements ActionListener {
+public class LogReg implements ActionListener {
 
 	// Frame is the frame of the first pop up
 	JFrame firstForm = new JFrame();
@@ -46,6 +40,7 @@ public class LogReg extends Model  implements ActionListener {
 		firstForm.setSize(420, 300);
 		firstForm.setLayout(null);
 		firstForm.setVisible(true);
+		firstForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 	}
 	
@@ -53,7 +48,11 @@ public class LogReg extends Model  implements ActionListener {
 	@Override
 	public void actionPerformed (ActionEvent e) {
 		if (e.getSource()==registerButton) {
+			
+			
 			System.out.print("Taking to register"); 
+		}else if (e.getSource()==loginButton) {
+			firstForm.dispose();
 		}
 		
 		}

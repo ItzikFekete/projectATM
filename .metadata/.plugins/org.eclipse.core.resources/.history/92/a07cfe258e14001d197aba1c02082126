@@ -1,0 +1,99 @@
+package frontEnd;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import backEnd.Model;
+
+
+public class LoginPage implements ActionListener {
+
+	JFrame LoginForm = new JFrame();
+	JLabel emailL, passwordL;
+	JTextField emailTF, passwordTF;
+	JButton login;
+	
+	Connection con = Model.connect();
+	Statement stmt;
+	ResultSet rs; 
+	String userEmail; 
+	
+	public LoginPage()  {
+		JFrame loginForm = new JFrame();
+		loginForm.setSize(420, 300);
+		loginForm.setTitle("Login form");
+		loginForm.setLayout(null);
+
+		emailL = new JLabel("Email:");
+		emailL.setSize(80, 30);
+		emailL.setLocation(40, 50);
+		loginForm.add(emailL);
+
+		emailTF = new JTextField();
+		emailTF.setSize(200, 30);
+		emailTF.setLocation(120, 50);
+		loginForm.add(emailTF);
+
+		passwordL = new JLabel("Password");
+		passwordL.setSize(80, 30);
+		passwordL.setLocation(40, 90);
+		loginForm.add(passwordL);
+
+		passwordTF = new JTextField();
+		passwordTF.setSize(200, 30);
+		passwordTF.setLocation(120, 90);
+		loginForm.add(passwordTF);
+
+		login = new JButton("Register");
+		login.setSize(200, 40);
+		login.setFont(new Font("Constantia Bold", Font.ITALIC, 20));
+		login.setLocation(130, 150);
+		loginForm.add(login);
+
+		loginForm.setVisible(true);
+		
+		
+	}
+
+	
+
+	public void actionPerformed(ActionEvent e) {
+		System.out.print("accepted");
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("select personal_email from registrationAtm"); 
+			while (rs.next()) {
+				userEmail = rs.getString(1); 
+				System.out.println(userEmail); 
+			}
+			rs.close();
+			stmt.close();
+			
+		}catch(Exception e1) {
+			System.out.print(e1.getMessage());
+			
+		}
+		// TODO Auto-generated method stub
+		if (login.getText()== userEmail) {
+			System.out.println("Welcome");
+		}
+		 
+			
+		}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new LoginPage();
+
+	}
+	}
+

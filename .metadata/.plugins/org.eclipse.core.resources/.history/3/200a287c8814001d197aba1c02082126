@@ -1,0 +1,34 @@
+package backEnd;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import frontEnd.LoginPage;
+
+public class RetrievedData {
+	Connection con = Model.connect();
+	Statement stmt;
+	ResultSet rs; 
+	String userEmail; 
+	public void retrievedData() throws SQLException {
+		stmt=con.createStatement();
+		rs =stmt.executeQuery("select personal_email from registrationAtm");
+		 
+		while (rs.next()) {
+			userEmail = rs.getString(1);
+			//userPassword = rs.getString(5);
+			System.out.println("The users "+ userEmail);
+			
+		}
+		rs.close();
+		stmt.close();
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new LoginPage();  
+
+	}
+
+}

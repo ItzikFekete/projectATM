@@ -1,0 +1,53 @@
+package frontEnd;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class firstMenu implements ActionListener {
+	JFrame messageAndOption;
+	JLabel message; 
+	JButton continueJ; 
+	
+	public firstMenu() {
+		JFrame messageAndOptions= new JFrame();
+		messageAndOptions.setSize(420, 300);
+		messageAndOptions.setTitle("Welcome");
+		messageAndOptions.setLayout(null);
+		
+		message = new JLabel("To be inputed ");
+		message.setSize(80, 30);
+		message.setLocation(40, 50);
+		
+		continueJ = new JButton();
+		continueJ.setSize(220, 50);
+		continueJ.setLocation(130, 150);
+		continueJ.addActionListener(this);
+		
+		messageAndOptions.add(message); 
+		messageAndOptions.add(continueJ); 
+		
+		messageAndOptions.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new firstMenu();
+
+	}
+
+}

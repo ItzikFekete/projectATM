@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -21,16 +20,15 @@ import backEnd.Model;;
 
 public class RegistrationForm implements ActionListener {
 
-	Connection con = null;
-	ResultSet rs = null;
-	PreparedStatement pst = null;
-	PreparedStatement pst2 = null; 
+	ResultSet rs;
+	PreparedStatement pst ;
+	PreparedStatement pst2; 
 
 	JFrame regInput = new JFrame();
 	JLabel dob, titleL, fNameL, lNameL, companyL, communityL, addL, cityL, postcodeL, emailL, passwordL;
-	// private JButton regButton, cancelButton;
+
 	JTextField firstNameT, lastNameT, companyText, communityText, addT, cityT, postcodeT, emailT, passwordT;
-	//JPasswordField securePassword;
+	
 
 	String[] titleToChoose = { "Mr", "Mrs.", "Ms.", "Master", "Doctor" };
 	JComboBox<String> title = new JComboBox<>(titleToChoose);
@@ -75,21 +73,21 @@ public class RegistrationForm implements ActionListener {
 		lastNameT.setSize(200, 30);
 		lastNameT.setLocation(400, 50);
 
-		companyL = new JLabel("Company Name?");
-		companyL.setSize(200, 30);
-		companyL.setLocation(80, 80);
-
-		companyText = new JTextField();
-		companyText.setSize(250, 30);
-		companyText.setLocation(80, 110);
-
-		communityL = new JLabel("Community organisation name?");
-		communityL.setSize(200, 30);
-		communityL.setLocation(400, 80);
-
-		communityText = new JTextField();
-		communityText.setSize(250, 30);
-		communityText.setLocation(400, 110);
+//		companyL = new JLabel("Company Name?");
+//		companyL.setSize(200, 30);
+//		companyL.setLocation(80, 80);
+//
+//		companyText = new JTextField();
+//		companyText.setSize(250, 30);
+//		companyText.setLocation(80, 110);
+//
+//		communityL = new JLabel("Community organisation name?");
+//		communityL.setSize(200, 30);
+//		communityL.setLocation(400, 80);
+//
+//		communityText = new JTextField();
+//		communityText.setSize(250, 30);
+//		communityText.setLocation(400, 110);
 
 		addL = new JLabel("Address:");
 		addL.setSize(200, 30);
@@ -127,7 +125,7 @@ public class RegistrationForm implements ActionListener {
 		passwordL.setSize(200, 30);
 		passwordL.setLocation(400, 310);
 
-		passwordT = new JPasswordField();
+		passwordT = new JTextField();
 		passwordT.setSize(250, 30);
 		passwordT.setLocation(400, 340);
 
@@ -167,10 +165,10 @@ public class RegistrationForm implements ActionListener {
 		regInput.add(firstNameT);
 		regInput.add(lNameL);
 		regInput.add(lastNameT);
-		regInput.add(companyL);
-		regInput.add(communityL);
-		regInput.add(communityText);
-		regInput.add(companyText);
+//		regInput.add(companyL);
+//		regInput.add(communityL);
+//		regInput.add(communityText);
+//		regInput.add(companyText);
 		regInput.add(addL);
 		regInput.add(addT);
 		regInput.add(cityL);
@@ -196,33 +194,39 @@ public class RegistrationForm implements ActionListener {
 
 	public void actionPerformed(java.awt.event.ActionEvent e1) {
 		if (e1.getSource() == regButton) {
-			System.out.print("Registering");
+			 
+			Connection con = Model.connect();
+			
+			String query = "insert into registrationAtm values(?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
 
 			try {
-				String query = "insert into registrationAtm values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				pst = con.prepareStatement(query);
-				pst.setString(2, titleL.getText());
+				pst.setString(2,((String) title.getSelectedItem().toString()));
 				pst.setString(3, firstNameT.getText());
 				pst.setString(4, lastNameT.getText());
 				pst.setString(5, addT.getText());
 				pst.setString(6, cityT.getText());
 				pst.setString(7, postcodeT.getText());
-				pst.setInt(8, Integer.parseInt((String) dates.getSelectedItem()));
+				pst.setInt(8, Integer.parseInt((String) dates.getSelectedItem().toString()));
 				pst.setString(9, (String) months.getSelectedItem());
-				pst.setInt(10, Integer.parseInt((String) years.getSelectedItem()));
+				pst.setInt(10, Integer.parseInt((String) years.getSelectedItem().toString()));
 				pst.setString(11, emailT.getText());
-//				pst.setString(12, passwordT.getText());
+				pst.setString(12, passwordT.getText());
+				
 				pst.execute();
-//				String queryTable2 = "insert into detailsAtm values(?,?) "; 
-//				pst2 = con.prepareStatement(queryTable2);
+//				con.close();
+				System.out.print("registered");
+				
+//				String query2 = "insert into detailsAtm values (?,?)"; 
+//				pst2 = con.prepareStatement(query2);
 //				pst2.setString(2, companyText.getText());
 //				pst2.setString(3, communityText.getText());
 //				pst2.execute();
-				JOptionPane.showInputDialog(null, "Welcome" +  lastNameT+ "\n Your details have been registered");
-				
+//				
 				
 			} catch (Exception e) {
-
+				System.out.println(e.getMessage());
 			}
 		} else if (e1.getSource() == cancelButton) {
 			System.out.print("Cancel");
@@ -231,61 +235,6 @@ public class RegistrationForm implements ActionListener {
 	}
 //		
 //
-//		if (e1.getSource() == regButton) {
-//			System.out.println("registering?");
-//			String personal_title = (String) title.getSelectedItem();
-//			String personal_first_name = firstNameT.getSelectedText();
-//			String personal_last_name = lastNameT.getSelectedText();
-//			String firstLAdd = addT.getSelectedText();
-//			String secondLAdd = address2A.getSelectedText();
-//			String city = cityT.getSelectedText();
-//			String postcode = postcodeT.getSelectedText();
-//			String application_Company = companyText.getSelectedText();
-//			String application_Community =communityText.getSelectedText();
-//			String phone = phoneA.getSelectedText();
-//			String date = (String) dates.getSelectedItem();
-//			String month = (String) months.getSelectedItem();
-//			String year = (String) years.getSelectedItem();
-//			String email = emailT.getSelectedText();
-//			String password = passwordT.getSelectedText();
-//			// JOptionPane.showMessageDialog(null, "Registered" + title + lastNameT);
-
-//		} else if (e1.getSource() == cancelButton) {
-//			System.out.print("cancelled");
-//		}
-//	}
-
-//	public static void connect() {
-//		
-//
-//		try {
-//
-//			String url = "jdbc:sqlite:C:\\Users\\myfek\\OneDrive\\Personal\\Gateshead "
-//					+ "College\\Project3\\ProjectATM.db";
-//			con = DriverManager.getConnection(url);
-//			System.out.println("connection made");
-//			Statement st = conn.createStatement();
-//			String querie1 = "INSERT INTO 'personalInfo'(personal_title ,personal_first_name, "
-//					+ "personal_last_name,firstLAdd, secondLAdd, city, postcode, application_Company,"
-//					+ " application_Community, phone, date, month, year, email, password) "
-//					+ "VALUES  (personal_title, 'firstNameT', 'lastNameT', 'addT', 'address2A', 'cityT', 'postcodeT',"
-//					+ "'companyText', 'areaCommunity', 'phoneA', 'dates', 'months', 'years', 'emailT', 'passwordT')";
-//			st.execute(querie1);
-//			con.close();
-//
-//		} catch (SQLException e) {
-//			System.out.println(e.getMessage());
-//		} finally {
-//			try {
-//				if (conn != null) {
-//					conn.close();
-//				}
-//			} catch (SQLException ex) {
-//				System.out.println(ex.getMessage());
-//			}
-//		}
-//		
-
 //	}
 
 	public static void main(String[] args) {
