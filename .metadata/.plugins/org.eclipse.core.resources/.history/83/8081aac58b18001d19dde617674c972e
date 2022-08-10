@@ -74,7 +74,6 @@ public class LoginPage extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(java.awt.event.ActionEvent e1) {
-		this.dispose();
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("select * from registrationAtm");
@@ -97,7 +96,6 @@ public class LoginPage extends JFrame implements ActionListener {
 			System.out.print(e.getMessage());
 	
 		}
-		
 	}
 
 	public static void main(String[] args) {

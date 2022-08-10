@@ -74,7 +74,7 @@ public class LoginPage extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(java.awt.event.ActionEvent e1) {
-		this.dispose();
+		depositForm = new WelcomeNDeposit(null); 
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("select * from registrationAtm");
