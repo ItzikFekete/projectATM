@@ -1,0 +1,39 @@
+package backEnd;
+
+import java.sql.DriverManager;  
+import java.sql.Connection;  
+import java.sql.ResultSet;  
+import java.sql.SQLException;  
+import java.sql.Statement;
+  
+
+public class ReceivedData {
+	Connection con = Model.con; 
+	String id, title, firstN; 
+	public void allData() {
+		String sql = "select * from registrationAtm"; 
+		try {
+			Statement stmt  = con.createStatement();  
+            ResultSet rs    = stmt.executeQuery(sql);  
+            while (rs.next()){
+            	
+            	System.out.println(rs.getInt("personal_id)\t"+"personal_title"));
+            			 
+//            	id= rs.getString("personal_id");
+//            	title = rs.getString("personal_title");
+//            	firstN = rs.getString("personal_firstName");
+            	
+            }
+            System.out.println(title);
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+
+	public static void main(String[] args) {
+		new ReceivedData(); 
+
+	}
+
+}

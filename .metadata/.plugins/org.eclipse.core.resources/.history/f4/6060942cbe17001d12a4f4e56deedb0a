@@ -1,0 +1,189 @@
+package frontEnd;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.io.*;
+
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+
+import org.junit.rules.TestWatcher;
+
+import backEnd.Model;
+
+public class WelcomeNDeposit implements ActionListener {
+
+	JFrame messageAndOption;
+	JLabel userId, message, notePs, personalOpeningMsg, busOpenMsg, commOpenMsg;
+	JButton personal, business, community;
+//	JRadioButton personal, business, community;
+//	ButtonGroup typeGrouped;
+//	JTextField radioButtonChoice;
+	JSeparator sep;
+
+	Connection con = Model.connect();
+	Statement stmt;
+	ResultSet rs;
+	String userTitle, userLName;
+
+	public WelcomeNDeposit() {
+		JFrame messageAndOption = new JFrame();
+		messageAndOption.setSize(600, 600);
+		messageAndOption.setTitle("Welcome");
+		messageAndOption.setLayout(null);
+
+		userId = new JLabel("User ID: ");
+		userId.setSize(50, 30);
+		userId.setLocation(450, 15);
+
+		message = new JLabel("<Html>Welcome " + userTitle + " " + userLName + "<p><br> "
+				+ "Please select if you are applying as an individual, Business or Community Centre</p></Html?");
+		message.setSize(540, 180);
+		message.setLocation(10, 20);
+		personal = new JButton();
+		personal.setText("Individual");
+		personal.setSize(120, 40);
+		personal.setLocation(80, 135);
+		personal.addActionListener(this);
+		messageAndOption.add(personal);
+
+		business = new JButton();
+		business.setText("Business");
+		business.setSize(120, 40);
+		business.setLocation(80, 170);
+		business.addActionListener(this);
+		messageAndOption.add(business);
+
+		community = new JButton();
+		community.setText("Community");
+		community.setSize(120, 40);
+		community.setLocation(80, 200);
+		community.addActionListener(this); 
+		messageAndOption.add(community);
+
+//		typeGrouped = new ButtonGroup();
+//		typeGrouped.add(personal);
+//		typeGrouped.add(business);
+//		typeGrouped.add(community);
+//		radioButtonChoice = new JTextField(); 
+
+		notePs = new JLabel("Ps. You will be able to add other type of accounts later");
+		notePs.setSize(500, 50);
+		notePs.setLocation(50, 230);
+		messageAndOption.add(notePs);
+
+//		continueJ = new JButton("Continue");
+//		continueJ.setSize(85, 65);
+//		continueJ.setLocation(350, 150);
+//		continueJ.addActionListener(this);
+
+		sep = new JSeparator();
+		sep.setSize(420, 15);
+		sep.setLocation(70, 270);
+		
+		personalOpeningMsg = new JLabel("<html>You are qualified to £1,500 overdraft facility, "
+				+ "with an inital deposit of £1,500<p><br> How much would you like to deposit?"
+				+ "</p><p><p> £</P></html>");
+		personalOpeningMsg.setSize(540, 50);
+		personalOpeningMsg.setLocation(30, 280);
+		personalOpeningMsg.setVisible(false); 
+		
+		busOpenMsg = new JLabel("<html>Your Business qualifies to £2,500 overdraft facility, "
+				+ "with an inital deposit of £2,500<p><br>");
+		busOpenMsg.setSize(540, 50);
+		busOpenMsg.setLocation(30, 280);
+		busOpenMsg.setVisible (false); 
+		
+		commOpenMsg = new JLabel("Your Community Centre qualifies to £1,000 overdraft "
+				+ "facility, with an inital deposit of £2,500");
+		commOpenMsg.setSize(150, 100);
+		commOpenMsg.setLocation(50, 300);
+		commOpenMsg.setVisible(false);
+		
+
+		
+		messageAndOption.add(userId);
+		messageAndOption.add(message);
+		messageAndOption.add(personal);
+		messageAndOption.add(business);
+		messageAndOption.add(community);
+		messageAndOption.add(personalOpeningMsg);
+		messageAndOption.add(busOpenMsg);
+		messageAndOption.add(commOpenMsg);
+
+		messageAndOption.setVisible(true);
+
+		messageAndOption.add(sep);
+
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("select * from registrationAtm");
+			while (rs.next()) {
+				userTitle = rs.getString("personal_title");
+				userLName = rs.getString("personal_lastName");
+
+			}
+			rs.close();
+			stmt.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		if (e.getSource()==personal) { 
+			JOptionPane.showMessageDialog(null, "You are qualified to £1,500 overdraft "
+					+ "facility, with an inital deposit of £1,500");
+			personalOpeningMsg.setVisible(true);
+//			personalOpeningMsg.revalidate(); 
+//			radioButtonChoice.setEditable(true);
+				
+		}else if (e.getSource()==business) {
+			
+			busOpenMsg.setVisible(true);
+			JOptionPane.showMessageDialog(null, "Your Business qualifies to £2,500 overdraft "
+					+ "facility, with an inital deposit of £2,500" );
+//			busOpenMsg.revalidate();
+					 
+//			radioButtonChoice.setEditable(true);
+		}else if (e.getSource()==community) {
+			
+			commOpenMsg.setVisible(true);
+//			messageAndOption.add(commOpenMsg);
+//		community.addActionListener(new ActionListener() {
+			JOptionPane.showMessageDialog(null, "Your Community Centre qualifies to £1,000 overdraft "
+					+ "facility, with an inital deposit of £2,500");
+//				commOpenMsg.revalidate();
+//				radioButtonChoice.setEditable(true);
+			}	
+//		}
+//		
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new WelcomeNDeposit();
+
+	}
+
+}

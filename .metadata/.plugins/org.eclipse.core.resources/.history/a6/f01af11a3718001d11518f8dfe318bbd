@@ -1,0 +1,19 @@
+package backEnd;
+import frontEnd.*;  
+
+public class GatesHeadAtm extends RegistrationForm {
+	
+	static LoginPage loginForm;
+	static LogReg startForm;
+	static RegistrationForm registartionForm;
+	static WelcomeNDeposit depositForm;
+
+	
+	// instance of user 
+	// order of longing forms / shared views 
+
+	public static void main(String[] args) {
+		startForm = new LogReg();
+	}
+
+}

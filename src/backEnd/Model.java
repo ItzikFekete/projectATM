@@ -1,4 +1,6 @@
 package backEnd;
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.awt.event.ActionEvent;
@@ -19,7 +21,7 @@ public class Model {
 	}catch(Exception e) {
 		JOptionPane.showMessageDialog(null, e);
 		System.out.print(e);
-		return null; }
+		return con; }
 	}
 	public void regButtonactionPerformed(ActionEvent e) {
 	

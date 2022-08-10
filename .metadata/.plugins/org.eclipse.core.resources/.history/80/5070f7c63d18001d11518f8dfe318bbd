@@ -1,0 +1,30 @@
+package backEnd;
+
+public class User {
+	// userId, user info etc.
+	Connection con = Model.connect();
+	try {
+		stmt = con.createStatement();
+		rs = stmt.executeQuery("select * from registrationAtm");
+		while (rs.next()) {
+			userId = rs.getString("personal_id"); 
+			userEmail = rs.getString("personal_email");
+			userPassword = rs.getString("personal_password");
+			title = rs.getString("personal_title");
+			lastName = rs.getString("personal_lastName");
+			System.out.println(userId+ "\t" + userEmail + "\t" + userPassword + "\t" + title + "\t" + lastName);
+		}
+		rs.close();
+		stmt.close();
+
+	} catch (Exception e) {
+		System.out.print(e.getMessage());
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

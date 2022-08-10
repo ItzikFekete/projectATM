@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="userLName"/>
+		<item key="selection" value="this"/>
 		<item key="wrap" value="true"/>
-		<item key="casesensitive" value="true"/>
+		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="messageAndOption"/>
 			<item value="userEmail"/>
+			<item value="emailTF"/>
+			<item value="WelcomeNDeposit"/>
+			<item value="RegistrationForm"/>
+			<item value="LoginPage"/>
+			<item value="LogReg"/>
+			<item value="logreg"/>
+			<item value="radiobuttonch"/>
+			<item value="JFrame"/>
+			<item value="welcome"/>
+			<item value="password"/>
+			<item value="toString"/>
 			<item value="jPasswordField"/>
 			<item value="jPass"/>
-			<item value="stmtT"/>
-			<item value="password"/>
-			<item value="email"/>
-			<item value="Connection"/>
-			<item value="firstName"/>
-			<item value="firstname"/>
-			<item value="emailA"/>
-			<item value="postCodeA"/>
-			<item value="postcodeA"/>
-			<item value="cityA"/>
-			<item value="address1A"/>
-			<item value=" areaCommunity"/>
 		</list>
 		<list key="replacehistory">
+			<item value="this"/>
+			<item value="JPanel"/>
+			<item value="messageAndOptions"/>
 			<item value="userLName"/>
 			<item value="stmtLN"/>
 			<item value="PAsswordLabel"/>
@@ -37,9 +40,6 @@
 			<item value="companyText"/>
 			<item value="passwordT"/>
 			<item value="personal_title"/>
-			<item value="title"/>
-			<item value="areaCompany"/>
-			<item value="address2A"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

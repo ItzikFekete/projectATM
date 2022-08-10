@@ -8,28 +8,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import backEnd.Model;
+import backEnd.User;
 
+public class LoginPage extends JFrame implements ActionListener {
 
-public class LoginPage implements ActionListener {
-
-	JFrame LoginForm = new JFrame();
-	JLabel emailL, passwordL;
-	JTextField emailTF, passwordTF;
-	JButton login;
+	WelcomeNDeposit depositForm;
 	
+	JFrame LoginForm, welcome;
+	JLabel emailL, passwordL, welcomeMessage, accountType;
+	JTextField emailTF, passwordTF, personalDep, BusDep, communityDep;
+	
+	JButton login, continueButton;
+	 
+
 	Connection con = Model.connect();
 	Statement stmt;
-	ResultSet rs; 
-	String userEmail; 
+	ResultSet rs;
+	String userId, userEmail, userPassword, title, lastName;
+	int titleNEmail;
 	
-	public LoginPage()  {
+	public LoginPage() {
+		
 		JFrame loginForm = new JFrame();
 		loginForm.setSize(420, 300);
 		loginForm.setTitle("Login form");
@@ -55,53 +63,44 @@ public class LoginPage implements ActionListener {
 		passwordTF.setLocation(120, 90);
 		loginForm.add(passwordTF);
 
-		login = new JButton("Register");
+		login = new JButton("Login");
 		login.setSize(200, 40);
 		login.setFont(new Font("Constantia Bold", Font.ITALIC, 20));
-		login.addActionListener(this); 
+		login.addActionListener(this);
 		login.setLocation(130, 150);
 		loginForm.add(login);
 
 		loginForm.setVisible(true);
-		
+	}
+
+	public void actionPerformed(java.awt.event.ActionEvent e1) {
 		try {
 			stmt = con.createStatement();
-			rs = stmt.executeQuery("select personal_email from registrationAtm"); 
+			rs = stmt.executeQuery("select * from registrationAtm");
 			while (rs.next()) {
-				userEmail = rs.getString(1); 
-				System.out.println(userEmail); 
-				
+				User user = new User(rs);
+				if (emailTF.getText().equals(user.email) && passwordTF.getText().equals(user.password)) {
+					new WelcomeNDeposit(user);
+					this.dispose();
+					break; // stop checking for matches
+				} else {
+					// keep checking for a match
+				}
 			}
 			rs.close();
 			stmt.close();
-			
-			
-		}catch(Exception e) {
-			System.out.print(e.getMessage());
-			
-		}
-		
-		
-	}
+			JOptionPane.showMessageDialog(null, "Please use correct email and password");
 
 	
+		} catch (Exception e) {
+			System.out.print(e.getMessage());
+	
+		}
+	}
 
-	public void actionPerformed(java.awt.event.ActionEvent e1) {
-		System.out.print("logged in");	
-		if (emailL.getText().equals(userEmail)) {
-			System.out.println("logged in");
-			
-			
-		}else {
-			JOptionPane.showMessageDialog(null, "Please use correct Login"); 
-		}
-		
-		
-		}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new LoginPage();
 
 	}
-	}
-
+}

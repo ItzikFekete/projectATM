@@ -1,0 +1,38 @@
+package backEnd;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import frontEnd.LogReg;
+import frontEnd.LoginPage;
+import frontEnd.RegistrationForm;
+import frontEnd.WelcomeNDeposit;  
+
+public class GatesHeadAtm implements ActionListener {
+	
+	static LoginPage loginForm;
+	static LogReg startForm;
+	static RegistrationForm registrationForm;
+	static WelcomeNDeposit depositForm;
+
+	
+	// instance of user 
+	// order of longing forms / shared views 
+
+	public static void main(String[] args) {
+		startForm = new LogReg();
+	}
+
+	@Override
+	public void actionPerformed (ActionEvent e) {
+		if (e.getSource()==startForm.registerButton) {
+			registrationForm = new RegistrationForm();
+			System.out.print("Taking to register"); 
+		}else if (e.getSource()==startForm.loginButton) {
+			
+			startForm.dispose();
+		}
+		
+	}
+
+
+}

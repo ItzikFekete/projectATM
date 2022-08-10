@@ -1,0 +1,186 @@
+package frontEnd;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+import backEnd.Model;
+
+public class LoginPage implements ActionListener {
+
+	JFrame LoginForm, welcome;
+	JLabel emailL, passwordL, welcomeMessage, accountType, notePs, 
+	personalOpeningMsg, busOpenMsg, commOpenMsg;
+	JTextField emailTF, passwordTF, personalDep, BusDep, communityDep;
+	JRadioButton personal, business, community;
+	ButtonGroup typeGrouped;
+	JButton login, continueButton;
+	JTextField radioButtonChoice; 
+
+	Connection con = Model.connect();
+	Statement stmt;
+	ResultSet rs;
+	String userId, userEmail, userPassword, title, lastName;
+	int titleNEmail;
+
+	public LoginPage() {
+		JFrame loginForm = new JFrame();
+		loginForm.setSize(420, 300);
+		loginForm.setTitle("Login form");
+		loginForm.setLayout(null);
+
+		emailL = new JLabel("Email:");
+		emailL.setSize(80, 30);
+		emailL.setLocation(40, 50);
+		loginForm.add(emailL);
+
+		emailTF = new JTextField();
+		emailTF.setSize(200, 30);
+		emailTF.setLocation(120, 50);
+		loginForm.add(emailTF);
+
+		passwordL = new JLabel("Password");
+		passwordL.setSize(80, 30);
+		passwordL.setLocation(40, 90);
+		loginForm.add(passwordL);
+
+		passwordTF = new JTextField();
+		passwordTF.setSize(200, 30);
+		passwordTF.setLocation(120, 90);
+		loginForm.add(passwordTF);
+
+		login = new JButton("Login");
+		login.setSize(200, 40);
+		login.setFont(new Font("Constantia Bold", Font.ITALIC, 20));
+		login.addActionListener(this);
+		login.setLocation(130, 150);
+		loginForm.add(login);
+
+		loginForm.setVisible(true);
+
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("select * from registrationAtm");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			while (rs.next()) {
+				String userId = rsmd.getCatalogName(1); 
+				userEmail = rs.getString("personal_email");
+				userPassword = rs.getString("personal_password");
+				title = rs.getString("personal_title");
+				lastName = rs.getString("personal_lastName");
+				System.out.println(userEmail + "\t" + userPassword + "\t" + title + "\t" + lastName);
+			}
+			rs.close();
+			stmt.close();
+
+		} catch (Exception e) {
+			System.out.print(e.getMessage());
+
+		}
+	}
+
+	public void actionPerformed(java.awt.event.ActionEvent e1) {
+		System.out.print("logged in");
+		if (emailTF.getText().equals(userEmail)) {
+			System.out.println("logged in");
+			if (passwordTF.getText().equals(userPassword)) {
+				JFrame welcome = new JFrame();
+				welcome.setSize(600, 600);
+				welcome.setTitle("Welcome");
+				welcome.setLayout(null);
+
+				accountType = new JLabel("Please select if you are applying as:");
+				accountType.setSize(450, 50);
+				accountType.setLocation(20, 20);
+				welcome.add(accountType);
+
+				personal = new JRadioButton();
+				personal.setText("Individual");
+				personal.setSize(120, 50);
+				personal.setLocation(80, 70);
+				welcome.add(personal);
+
+				business = new JRadioButton();
+				business.setText("Business");
+				business.setSize(120, 50);
+				business.setLocation(80, 105);
+				welcome.add(business);
+				
+				personal.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed (ActionEvent e1) {
+						radioButtonChoice.setEditable(true);
+					}
+				});
+				business.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed (ActionEvent e1) {
+						radioButtonChoice.setEditable(true);
+					}
+				});
+				community.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed (ActionEvent e1) {
+						radioButtonChoice.setEditable(true);
+					}
+				});
+
+				community = new JRadioButton();
+				community.setText("Community");
+				community.setSize(120, 50);
+				community.setLocation(80, 140);
+				welcome.add(community);
+
+				typeGrouped = new ButtonGroup();
+				typeGrouped.add(personal);
+				typeGrouped.add(business);
+				typeGrouped.add(community);
+
+				continueButton = new JButton("Continue");
+				continueButton.setSize(200, 40);
+				continueButton.setFont(new Font("Constantia Bold", Font.ITALIC, 20));
+				continueButton.addActionListener(this);
+				continueButton.setLocation(130, 200);
+				welcome.add(continueButton);
+
+				notePs = new JLabel("Ps. You will be able to add other accounts later");
+				notePs.setSize(500, 50);
+				notePs.setLocation(50, 250);
+				welcome.add(notePs);
+				welcome.setVisible(true);
+			}
+			if (e1.getSource()==personal){
+				JFrame welcome = new JFrame(); 
+				personalOpeningMsg = new JLabel();
+				personalOpeningMsg.setText("<Html> Congratulations<br>"
+						+ "Your account has been opened<p> You qualify for an overdraft facility of £1,500"
+						+ "<p> How much would you like to deposit?");
+				personalOpeningMsg.setSize(500, 200);
+				personalOpeningMsg.setLocation(50, 300);
+				welcome.add(personalOpeningMsg); 
+			}else if (e1.getSource()==business) {
+				
+			}
+		}
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new LoginPage();
+
+	}
+}

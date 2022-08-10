@@ -7,20 +7,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 
-public class LogReg implements ActionListener {
+public class LogReg extends JFrame implements ActionListener {
 
 	// Frame is the frame of the first pop up
 	JFrame firstForm = new JFrame();
 	// Labels to be used for asking the starting question
 	JLabel labelQuestion1, labelQuestion2;
 	// buttons will be to login or register
-	JButton loginButton, registerButton;
-	
-	
+	public JButton loginButton, registerButton;
+	public boolean isLogin = true;
+
+	LoginPage loginForm;
+	RegistrationForm registrationForm;
+
 
 	public LogReg() {
-		JFrame firstForm = new JFrame();
-
 		labelQuestion1 = new JLabel();
 		labelQuestion1.setBounds(30, 25, 400, 100);
 		labelQuestion1.setText("If you have an account please click Login");
@@ -33,34 +34,30 @@ public class LogReg implements ActionListener {
 		registerButton = new JButton("Register");
 		registerButton.setBounds(200, 170, 120, 50);
 		registerButton.addActionListener(this);
-		firstForm.add(labelQuestion1);
-		firstForm.add(labelQuestion2);
-		firstForm.add(loginButton);
-		firstForm.add(registerButton);
-		firstForm.setSize(420, 300);
-		firstForm.setLayout(null);
-		firstForm.setVisible(true);
-		firstForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+		add(labelQuestion1);
+		add(labelQuestion2);
+		add(loginButton);
+		add(registerButton);
+		setSize(420, 300);
+		setLayout(null);
+		setVisible(true);
 	}
-	
+
 
 	@Override
 	public void actionPerformed (ActionEvent e) {
-		if (e.getSource()==registerButton) {
-			
-			
-			System.out.print("Taking to register"); 
-		}else if (e.getSource()==loginButton) {
-			firstForm.dispose();
+		if (e.getSource()==this.registerButton) {
+			registrationForm = new RegistrationForm();
+			this.dispose();
+		}else if (e.getSource()==this.loginButton) {
+			loginForm = new LoginPage();
+			this.isLogin = true;
+			this.dispose();
 		}
 		
-		}
-
+	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new LogReg();
-
+		 new LogReg();
 	}
 
 }
