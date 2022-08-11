@@ -23,7 +23,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 	ResultSet rs;
 	PreparedStatement pst ;
 	PreparedStatement pst2; 
-	LoginPage loginForm; 
+	LoginPage loginForm;  
 
 	JFrame regInput = new JFrame();
 	JLabel dob, titleL, fNameL, lNameL, companyL, communityL, addL, cityL, postcodeL, emailL, passwordL;
