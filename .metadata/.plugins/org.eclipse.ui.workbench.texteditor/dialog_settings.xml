@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="UId"/>
+		<item key="selection" value="communityName"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="UId"/>
-			<item value="overdtaft"/>
-			<item value="loginForm"/>
-			<item value="WelcomeNDeposit"/>
-			<item value="welcome"/>
-			<item value="registrationForm"/>
-			<item value="regInput"/>
-			<item value="messageAndOption"/>
-			<item value="userEmail"/>
-			<item value="emailTF"/>
-			<item value="RegistrationForm"/>
-			<item value="LoginPage"/>
-			<item value="LogReg"/>
-			<item value="logreg"/>
-			<item value="radiobuttonch"/>
+			<item value="communityName"/>
+			<item value="acounts"/>
+			<item value="amount"/>
+			<item value="user"/>
+			<item value="user.con"/>
+			<item value="con"/>
+			<item value="actionPerformed"/>
+			<item value="rs"/>
+			<item value="stmt"/>
+			<item value="executeQuery"/>
+			<item value="getDB"/>
+			<item value="anotherac"/>
+			<item value="onAnotherAcctClicked"/>
+			<item value="addAccoun"/>
+			<item value="depositTransferL"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
+			<item value="depositLabel"/>
+			<item value="otherAccountL"/>
+			<item value="accountName1"/>
+			<item value="balanceNo1"/>
+			<item value="balanceAcc1"/>
+			<item value="accountNo1"/>
+			<item value="account1NameNumber"/>
+			<item value="accoun1Name"/>
+			<item value="overdraftP"/>
 			<item value="overdraft"/>
 			<item value="this"/>
 			<item value="JPanel"/>
 			<item value="messageAndOptions"/>
 			<item value="userLName"/>
-			<item value="stmtLN"/>
-			<item value="PAsswordLabel"/>
-			<item value="emailLabel"/>
-			<item value="emailT"/>
-			<item value="postcodeT"/>
-			<item value="cityT"/>
-			<item value="addT"/>
-			<item value="communityText"/>
-			<item value="companyText"/>
-			<item value="passwordT"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

@@ -13,10 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import backEnd.Model;;
+import backEnd.Model;
+import backEnd.User;;
 
 public class RegistrationForm extends JFrame implements ActionListener {
 
@@ -24,6 +26,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 	PreparedStatement pst ;
 	PreparedStatement pst2; 
 	LoginPage loginForm;  
+	WelcomeNDeposit welcomePage; 
 
 	JFrame regInput = new JFrame();
 	JLabel dob, titleL, fNameL, lNameL, companyL, communityL, addL, cityL, postcodeL, emailL, passwordL;
@@ -45,6 +48,8 @@ public class RegistrationForm extends JFrame implements ActionListener {
 			"2008", "2009" };
 	JComboBox<String> years = new JComboBox<>(year);
 	JButton regButton, cancelButton;
+	
+	
 
 	public RegistrationForm() {
 		this.setTitle("Registration Form");
@@ -195,11 +200,9 @@ public class RegistrationForm extends JFrame implements ActionListener {
 	public void actionPerformed(java.awt.event.ActionEvent e1) {
 		if (e1.getSource() == regButton) {
 			this.dispose();
-			loginForm = new LoginPage();
-			 
 			Connection con = Model.connect();
 			
-			String query = "insert into registrationAtm values(?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "insert into Users values(?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 
 			try {
@@ -220,6 +223,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 //				con.close();
 				System.out.print("registered");
 				
+				
 //				String query2 = "insert into detailsAtm values (?,?)"; 
 //				pst2 = con.prepareStatement(query2);
 //				pst2.setString(2, companyText.getText());
@@ -231,11 +235,22 @@ public class RegistrationForm extends JFrame implements ActionListener {
 				System.out.println(e.getMessage());
 				
 			}
+			
+			User user = User.login(emailT.getText(), passwordT.getText());
+			if (user != null) {
+				new WelcomeNDeposit(user);
+				this.setVisible(false);
+				this.dispose();
+				welcomePage= new WelcomeNDeposit(user); 
+			} else {
+				JOptionPane.showMessageDialog(null, "Please use correct email and password");
+			}
+			
 		} else if (e1.getSource() == cancelButton) {
 			System.out.print("Cancel");
 			this.dispose();
 
-		}
+		} 
 	}
 //		
 //

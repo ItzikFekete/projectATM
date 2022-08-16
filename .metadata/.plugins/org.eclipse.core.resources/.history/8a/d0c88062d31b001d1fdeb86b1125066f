@@ -1,0 +1,69 @@
+package backEnd;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import frontEnd.WelcomeNDeposit;
+
+public class User {
+	
+	public static int id;
+	public static String email;
+	public static String password;
+	public static String title;
+	public static String lastName;
+	public static String personalAccName, companyName, communityName; 
+	public static int account1Num, account2Num, account3Num; 
+	public static int account1Balance, account2Balance, account3Balance; 
+	Statement stmt; 
+	Connection con=Model.con; 
+
+	public User(ResultSet rs) throws SQLException {
+		
+		id = rs.getInt("id"); 
+		email = rs.getString("personal_email");
+		password = rs.getString("personal_password");
+		title = rs.getString("personal_title");
+		lastName = rs.getString("personal_lastName");
+		System.out.print("connected");
+		
+	}
+//	public void Banking (ResultSet rs) throws SQLException{
+//		
+//		try{
+//			stmt = con.createStatement();
+//			rs = stmt.executeQuery("select * from bankingAccountsNBalances");
+//			while (rs.next()) {
+//				personalAccName= rs.getString("personalAccName");
+//				companyName= rs.getString("companyName");
+//				communityName= rs.getString("communityName"); 
+//				account1Num= rs.getInt("account1Number");
+//				account1Balance= rs.getInt("account1Balance"); 
+//				account2Num=rs.getInt("account2Number");
+//				account2Balance = rs.getInt("account2Balance");
+//				account3Num= rs.getInt("account3Num");
+//				account3Balance = rs.getInt("account3Balance");
+//				stmt.execute(null);
+//				break;
+//			}
+//			rs.close();
+//			stmt.close();
+//		}catch(Exception e){
+//			
+//		}
+//		
+//		
+//		System.out.println(personalAccName +"\t" +companyName+"\t"+communityName+"\t"+ 
+//		account1Num +"\t" + account1Balance+"\t"+account2Num +"\t" + account2Balance+
+//		"\t"+account3Num +"\t" + account3Balance+"\t");
+//	
+//	}
+	public static void main(String[] args) throws SQLException {
+		new User(null); 
+	
+
+	}
+	 
+}
