@@ -92,7 +92,7 @@ public class MenuMain extends JFrame implements ActionListener {
 		this.add(greeting);
 		
 		account1 = new JLabel();
-		account1.setText(accountName1+ " Account: " + account1Number);
+		account1.setText(" Account: " + account1Number);
 		account1.setSize(220, 20);
 		account1.setLocation(220, 50); 
 		this.add(account1); 
@@ -104,7 +104,7 @@ public class MenuMain extends JFrame implements ActionListener {
 		this.add(balance1);
 		
 		account2 = new JLabel();
-		account2.setText(accountName1 + " Account: " + account1Number);
+		account2.setText(" Account: " + account1Number);
 		account2.setSize(180, 20);
 		account2.setLocation(220, 70); 
 		this.add(account2); 
@@ -116,7 +116,7 @@ public class MenuMain extends JFrame implements ActionListener {
 		this.add(balance2);
 		
 		account3 = new JLabel();
-		account3.setText(accountName1 + " Account: " + account1Number);
+		account3.setText("Account: " + account1Number);
 		account3.setSize(180, 20);
 		account3.setLocation(220, 90); 
 		this.add(account3); 

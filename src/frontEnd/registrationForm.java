@@ -223,7 +223,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 //				con.close();
 				System.out.print("registered");
 				
-				
+				new WelcomeNDeposit(null); 
 //				String query2 = "insert into detailsAtm values (?,?)"; 
 //				pst2 = con.prepareStatement(query2);
 //				pst2.setString(2, companyText.getText());
@@ -236,15 +236,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 				
 			}
 			
-			User user = User.login(emailT.getText(), passwordT.getText());
-			if (user != null) {
-				new WelcomeNDeposit(user);
-				this.setVisible(false);
-				this.dispose();
-				welcomePage= new WelcomeNDeposit(user); 
-			} else {
-				JOptionPane.showMessageDialog(null, "Please use correct email and password");
-			}
+		
 			
 		} else if (e1.getSource() == cancelButton) {
 			System.out.print("Cancel");

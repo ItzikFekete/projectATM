@@ -1,10 +1,12 @@
 package frontEnd;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -14,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+
+import org.sqlite.core.DB;
 
 import backEnd.Model;
 import backEnd.User;
@@ -26,7 +30,7 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 	JButton depositButton, anotherAcct, mainMenu;
 	JToggleButton personal, business, community;
 	ButtonGroup accountTypeGrp; 
-	JTextField orgName, depositAmount;
+	JTextField coName, ccName, depositAmount;
 	JSeparator sep, sep1;
 
 	int min = 10000001;
@@ -39,6 +43,7 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 
 	Connection con = Model.connect();
 	Statement stmt;
+	PreparedStatement psmt;
 	ResultSet rs;
 	String companyName, communityName, personalAcc, email;
 	//Below strings is just for the DB purpose but are not being used in this page
@@ -116,10 +121,15 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		commOpenMsg.setLocation(30, 280);
 		commOpenMsg.setVisible(false);
 
-		orgName = new JTextField();
-		orgName.setSize(240, 25);
-		orgName.setLocation(250, 305);
-		orgName.setVisible(false);
+		coName = new JTextField();
+		coName.setSize(240, 25);
+		coName.setLocation(250, 305);
+		coName.setVisible(false);
+		
+		ccName = new JTextField();
+		ccName.setSize(240, 25);
+		ccName.setLocation(250, 305);
+		ccName.setVisible(false);
 
 		accountMsg = new JLabel("How much would you like to deposit?");
 		accountMsg.setSize(210, 50);
@@ -179,7 +189,8 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		this.add(personalOpeningMsg);
 		this.add(busOpenMsg);
 		this.add(commOpenMsg);
-		this.add(orgName);
+		this.add(coName);
+		this.add(ccName);
 		this.add(accountMsg);
 
 		this.setVisible(true);
@@ -194,29 +205,7 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		userid = User.id;
 		email = User.email;
 		
-		pAccName= Account.personalAccName; 
-		bAccName = Account.companyName; 
-		cAccName = Account.communityName; 
-		companyName= orgName.getText();
-		communityName=orgName.getText(); 
-		
-		
-	}
-	private void getDB (ResultSet rs1) {
-		
-		try {
-			stmt =con.createStatement(); 
-			rs1 = stmt.executeQuery("select * from bankingAccountsNBalances");
-			Account account =null; 
-			while (rs1.next()) {
-				account = new Account (rs1); 
-				break; 
-			}
 			
-			
-		}catch(Exception e) {
-			
-		}
 		
 	}
 	
@@ -228,31 +217,30 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 
 		personalOpeningMsg.setVisible(false);
 		busOpenMsg.setVisible(false);
-		orgName.setVisible(false);
+		coName.setVisible(false);
 		commOpenMsg.setVisible(false);
-		orgName.setVisible(false);
+		ccName.setVisible(false);
 	}
 
 	private void onPersonalClicked() {
 		this.overdraft = 1500;
 		onAccountTypeClicked();
 		personalOpeningMsg.setVisible(true);
+		personalAcc= "Personal"; 
 	}
 
 	private void onBusinessClicked() {
 		this.overdraft = 2500;
 		onAccountTypeClicked();
-		companyName =orgName.getText();
 		busOpenMsg.setVisible(true);
-		orgName.setVisible(true);
+		coName.setVisible(true);
 	}
 
 	private void onCommunityClicked() {
 		this.overdraft = 1000;
 		onAccountTypeClicked();
-		communityName = orgName.getText();
 		commOpenMsg.setVisible(true);
-		orgName.setVisible(true);
+		ccName.setVisible(true);
 	}
 	
 	private void onDepositClicked() {
@@ -264,31 +252,14 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		sep1.setVisible(true);
 		balanceNo1Msg.setVisible(true);	
 		anotherAcct.setVisible(true);
-	}
-	
-	private void onAnotherAcctClicked () {
-		getDB(rs); 
-		accountTypeGrp.clearSelection();
-		if (pAccName != null) {
-			personal.setVisible(false);
-		}else if(bAccName!=null) {
-			business.setVisible(false);
-		}else if (cAccName!=null) {
-			community.setVisible(false);
-		}else {
-			JOptionPane.showMessageDialog(null, "It seems that you already have all types of accounts");
-		}
-	}
-	
-	private void onMenuClicked() {
 		
 		String sql ="insert into Accounts values (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-				
+		
 		try {
 			PreparedStatement pst =con .prepareStatement(sql);
 			pst.setString(2, personalAcc);
-			pst.setString (3, companyName);
-			pst.setString(4, communityName);
+			pst.setString (3, coName.getText());
+			pst.setString(4, ccName.getText());
 			pst.setInt(5, accountNo1);
 			pst.setDouble(6, balanceNo1);
 			pst.setString(7, accountNo2);
@@ -302,6 +273,18 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		} catch (Exception e1) {
 			System.out.println(e1.getMessage());
 		}
+	}
+
+	
+	
+	private void onAnotherAcctClicked () {
+		accountTypeGrp.clearSelection();
+		
+		
+	}
+	private void onMenuClicked() {
+		
+		
 		this.dispose();
 		new MenuMain(user);
 	}
@@ -320,6 +303,21 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 			this.onAnotherAcctClicked();
 		} else if (e.getSource() == mainMenu) {
 			this.onMenuClicked();
+		}
+		try {
+			psmt = con.prepareStatement("select * from Accounts WHERE id=?;");
+			psmt.setInt(1, userid);
+			 
+			rs = psmt.executeQuery();
+			new Account (rs); 
+			while (rs.next()) {
+				new Account (rs); 
+				break; 
+			}
+			
+			
+		}catch(Exception e1) {
+			
 		}
 	}
 

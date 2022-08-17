@@ -32,24 +32,7 @@ public class User {
 		
 	}
 	
-	public static User login(String email, String password) {
-		try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM Users WHERE personal_email = ? AND personal_password = ?")) {
-			stmt.setString(1, email);
-			stmt.setString(2, password);
-			try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) {
-					return new User(rs);
-				}
-			} catch (Exception e) {
-				System.out.print(e.getMessage());
-				
-			}
-		} catch (Exception e) {
-			System.out.print(e.getMessage());	
-		}
-		return null;
-		
-	}
+	
 	
 //	public void Banking (ResultSet rs) throws SQLException{
 //		

@@ -29,7 +29,9 @@ public class LoginPage extends JFrame implements ActionListener {
 	JTextField emailTF, passwordTF, personalDep, BusDep, communityDep;
 	
 	JButton login, continueButton;
-	 
+	 Statement stmt;
+	 Connection con = Model.connect();
+	 ResultSet rs; 
 
 	String userId, userEmail, userPassword, title, lastName;
 	int titleNEmail;
@@ -72,14 +74,27 @@ public class LoginPage extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(java.awt.event.ActionEvent e1) {
-		User user = User.login(emailTF.getText(), passwordTF.getText());
-		if (user != null) {
-			new WelcomeNDeposit(user);
-			this.setVisible(false);
-			this.dispose();
-			welcomePage= new WelcomeNDeposit(user); 
-		} else {
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("select * from Users");
+			while (rs.next()) {
+				User user = new User(rs);
+				if (emailTF.getText().equals(user.email) && passwordTF.getText().equals(user.password)) {
+					new WelcomeNDeposit(user);
+					this.dispose();
+					break; // stop checking for matches
+				} else {
+					// keep checking for a match
+				}
+			}
+			rs.close();
+			stmt.close();
 			JOptionPane.showMessageDialog(null, "Please use correct email and password");
+
+	
+		} catch (Exception e) {
+			System.out.print(e.getMessage());
+	
 		}
 	}
 
