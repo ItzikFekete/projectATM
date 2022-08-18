@@ -77,20 +77,25 @@ public class LoginPage extends JFrame implements ActionListener {
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery("select * from Users");
+			User user = new User(rs);
+			new MenuMain(user);
 			while (rs.next()) {
-				User user = new User(rs);
-				if (emailTF.getText().equals(user.email) && passwordTF.getText().equals(user.password)) {
-					new WelcomeNDeposit(user);
+				
+				if (emailTF.getText().equals(User.email) && passwordTF.getText().equals(User.password)) {
+					
 					this.dispose();
 					break; // stop checking for matches
+					
 				} else {
 					// keep checking for a match
 				}
+			
 			}
 			rs.close();
 			stmt.close();
 			JOptionPane.showMessageDialog(null, "Please use correct email and password");
 
+			
 	
 		} catch (Exception e) {
 			System.out.print(e.getMessage());

@@ -8,27 +8,49 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
+import frontEnd.LoginPage;
 import frontEnd.WelcomeNDeposit;
 
 
-public class User {
+public class User extends LoginPage {
 	
 	public static int id;
 	public static String email;
 	public static String password;
 	public static String title;
 	public static String lastName;
+	public static String pAccName, busAccName,  cAccName; 
+	public static int pAccNum, pAccBlnce, bAccNum, bAccBlnce, cAccNum, cAccBlnce; 
 	
 	Statement stmt; 
 	static Connection con = Model.con; 
 
 	public User(ResultSet rs) throws SQLException {
+		stmt= con.createStatement(); 
+		try {
+			String sql = "Select * from Users"; 
+			rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+			id = rs.getInt("id"); 
+			email = rs.getString("personal_email");
+			password = rs.getString("personal_password");
+			title = rs.getString("personal_title");
+			lastName = rs.getString("personal_lastName");
+			pAccName= rs.getString("personalAcc"); 
+			busAccName = rs.getString("businessAcc"); 
+			cAccName = rs.getString("comAcc"); 
+			pAccNum= rs.getInt("personalAccNum"); 
+			pAccBlnce = rs.getInt("personalAccBalance");
+			bAccNum = rs.getInt("businessAccNum");
+			bAccBlnce = rs.getInt("busAccBalance");
+			cAccNum = rs.getInt("comAccNum");
+			cAccBlnce= rs.getInt("comAccBalance");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		id = rs.getInt("id"); 
-		email = rs.getString("personal_email");
-		password = rs.getString("personal_password");
-		title = rs.getString("personal_title");
-		lastName = rs.getString("personal_lastName");
+		
 		
 	}
 	
@@ -66,6 +88,7 @@ public class User {
 //	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
 
 	}
 	 

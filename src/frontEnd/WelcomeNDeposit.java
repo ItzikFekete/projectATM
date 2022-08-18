@@ -21,35 +21,33 @@ import org.sqlite.core.DB;
 
 import backEnd.Model;
 import backEnd.User;
-import backEnd.Account;
 
 public class WelcomeNDeposit extends JFrame implements ActionListener {
 
-	JLabel userId, message, notePs, personalOpeningMsg, busOpenMsg, 
-	commOpenMsg, accountMsg, balanceNo1Msg;
+	JLabel userId, message, notePs, personalOpeningMsg, busOpenMsg, commOpenMsg, accountMsg, balanceNo1Msg;
 	JButton depositButton, anotherAcct, mainMenu;
 	JToggleButton personal, business, community;
-	ButtonGroup accountTypeGrp; 
+	ButtonGroup accountTypeGrp;
 	JTextField coName, ccName, depositAmount;
 	JSeparator sep, sep1;
 
 	int min = 10000001;
 	int max = 99999999;
-	int accountNo1 = (int) Math.floor(Math.random() * (max - min + 1) + min);
+	int accountNo1, accountNo2, accountNo3;
 	double balanceNo1, amount, overdraft;
-	
-	User user = null;
-	
+
+	static User user = null;
 
 	Connection con = Model.connect();
 	Statement stmt;
 	PreparedStatement psmt;
 	ResultSet rs;
 	String companyName, communityName, personalAcc, email;
-	//Below strings is just for the DB purpose but are not being used in this page
-	String accountNo2, balanceNo2, accountNo3, balanceNo3; 
+	double balanceNo2;
+	// Below strings is just for the DB purpose but are not being used in this page
+	double balanceNo3;
 	int userid;
-	String pAccName, bAccName, cAccName; 
+	String pAccName, bAccName, cAccName;
 
 	public WelcomeNDeposit(User user) {
 		this.user = user;
@@ -66,7 +64,7 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 				+ "Please select if you are applying as an individual, Business or Community Centre</p></Html?");
 		message.setSize(540, 180);
 		message.setLocation(10, 20);
-		
+
 		personal = new JToggleButton("Personal");
 		personal.setText("Individual");
 		personal.setSize(120, 40);
@@ -87,8 +85,8 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		community.setLocation(80, 200);
 		community.addActionListener(this);
 		this.add(community);
-		
-		accountTypeGrp = new ButtonGroup(); 
+
+		accountTypeGrp = new ButtonGroup();
 		accountTypeGrp.add(personal);
 		accountTypeGrp.add(business);
 		accountTypeGrp.add(community);
@@ -125,7 +123,7 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		coName.setSize(240, 25);
 		coName.setLocation(250, 305);
 		coName.setVisible(false);
-		
+
 		ccName = new JTextField();
 		ccName.setSize(240, 25);
 		ccName.setLocation(250, 305);
@@ -136,7 +134,7 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		accountMsg.setLocation(30, 330);
 		accountMsg.setVisible(false);
 
-		depositAmount = new JTextField("0"); 
+		depositAmount = new JTextField("0");
 		depositAmount.setSize(220, 25);
 		depositAmount.setLocation(260, 340);
 		depositAmount.setVisible(false);
@@ -149,7 +147,7 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 //			}
 //		});
 		this.add(depositAmount);
-		
+
 		depositButton = new JButton();
 		depositButton.setText("Deposit");
 		depositButton.setSize(120, 40);
@@ -162,25 +160,24 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		sep1.setSize(420, 20);
 		sep1.setLocation(60, 420);
 		sep1.setVisible(false);
-		
+
 		balanceNo1Msg = new JLabel();
-		balanceNo1Msg.setSize(450, 150); 
-		balanceNo1Msg.setLocation(30, 380); 
+		balanceNo1Msg.setSize(450, 150);
+		balanceNo1Msg.setLocation(30, 380);
 		balanceNo1Msg.setVisible(false);
-		
-		anotherAcct = new JButton("<html>Another<br> Account?</html?"); 
-		anotherAcct.setSize(120, 50); 
-		anotherAcct.setLocation(70, 480); 
-		anotherAcct.setVisible(false); 
-		anotherAcct.addActionListener(this); 
-		
-		
+
+		anotherAcct = new JButton("<html>Another<br> Account?</html?");
+		anotherAcct.setSize(120, 50);
+		anotherAcct.setLocation(70, 480);
+		anotherAcct.setVisible(false);
+		anotherAcct.addActionListener(this);
+
 		mainMenu = new JButton("<html> Main <br> Menu</html>");
 		mainMenu.setSize(120, 50);
 		mainMenu.setLocation(305, 480);
 		mainMenu.setVisible(false);
 		mainMenu.addActionListener(this);
-		
+
 		this.add(userId);
 		this.add(message);
 		this.add(personal);
@@ -197,18 +194,17 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 
 		this.add(sep);
 		this.add(sep1);
-		
+
 		this.add(mainMenu);
 		this.add(balanceNo1Msg);
-		this.add(anotherAcct); 
-		
+		this.add(anotherAcct);
+
 		userid = User.id;
 		email = User.email;
-		
-			
-		
+		companyName = User.cAccName;
+
 	}
-	
+
 	private void onAccountTypeClicked() {
 		accountMsg.setVisible(true);
 		depositAmount.setVisible(true);
@@ -224,67 +220,78 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 
 	private void onPersonalClicked() {
 		this.overdraft = 1500;
+		
 		onAccountTypeClicked();
+		balanceNo1 = overdraft + amount;
+		accountNo1=  (int) Math.floor(Math.random() * (max - min + 1) + min);
 		personalOpeningMsg.setVisible(true);
-		personalAcc= "Personal"; 
+		personalAcc = "Personal";
+		balanceNo1Msg.setText("<html> Your SortCode is 12-34-56, Account number is" + " " + accountNo1
+				+ "<p><br> Your available balance is £" + balanceNo1);
 	}
 
 	private void onBusinessClicked() {
 		this.overdraft = 2500;
 		onAccountTypeClicked();
+		balanceNo2 = overdraft + amount;
+		accountNo2  = (int) Math.floor(Math.random() * (max - min + 1) + min);
 		busOpenMsg.setVisible(true);
 		coName.setVisible(true);
+		balanceNo1Msg.setText("<html> Your SortCode is 12-34-56, Account number is" + " " + accountNo2
+				+ "<p><br> Your available balance is £" + balanceNo2);
 	}
 
 	private void onCommunityClicked() {
 		this.overdraft = 1000;
 		onAccountTypeClicked();
+		balanceNo3 = overdraft + amount;
+		accountNo3  = (int) Math.floor(Math.random() * (max - min + 1) + min);
 		commOpenMsg.setVisible(true);
 		ccName.setVisible(true);
+		balanceNo1Msg.setText("<html> Your SortCode is 12-34-56, Account number is" + " " + accountNo3
+				+ "<p><br> Your available balance is £" + balanceNo3);
 	}
-	
-	private void onDepositClicked() {
-		amount = Double.parseDouble(depositAmount.getText());
-		balanceNo1 = overdraft + amount;
-		balanceNo1Msg.setText("<html> Your SortCode is 12-34-56, Account number is"
-				+ " " + accountNo1 +"<p><br> Your available balance is £" +  balanceNo1);		
 
+	private void onDepositClicked(ResultSet rs) {
+		amount = Double.parseDouble(depositAmount.getText());
+		
 		sep1.setVisible(true);
-		balanceNo1Msg.setVisible(true);	
+		balanceNo1Msg.setVisible(true);
 		anotherAcct.setVisible(true);
-		
-		String sql ="insert into Accounts values (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		
+
 		try {
-			PreparedStatement pst =con .prepareStatement(sql);
-			pst.setString(2, personalAcc);
-			pst.setString (3, coName.getText());
-			pst.setString(4, ccName.getText());
-			pst.setInt(5, accountNo1);
-			pst.setDouble(6, balanceNo1);
-			pst.setString(7, accountNo2);
-			pst.setString(8, balanceNo2);
-			pst.setString(9, accountNo3);
-			pst.setString(10, balanceNo3);
-			pst.setString(11, User.email);
-			pst.setInt(12, User.id);
+			new User(rs);
+
+			String sql = "UPDATE Users set personalAcc =?, personalAccNum = ?, "
+					+ "personalAccBalance = ?, businessAcc = ?, personalAccNum = ?, "
+					+ "busAccBalance= ?, comAcc =?, comAccNum=?, comAccBalance=? Where id=?;";
+			PreparedStatement pst = con.prepareStatement(sql);
+
+			pst.setString(1, personalAcc);
+			pst.setInt(2, accountNo1);
+			pst.setDouble(3, balanceNo1);
+			pst.setString(4, coName.getText());
+			pst.setInt(5, accountNo2);
+			pst.setDouble(6, balanceNo2);
+			pst.setString(7, ccName.getText());
+			pst.setInt(8, accountNo3);
+			pst.setDouble(9, balanceNo3);
+			pst.setInt(10, User.id);
+
 			pst.execute();
-			System.out.print("working?");			
+			System.out.print("working?");
 		} catch (Exception e1) {
 			System.out.println(e1.getMessage());
 		}
 	}
 
-	
-	
-	private void onAnotherAcctClicked () {
+	private void onAnotherAcctClicked() {
 		accountTypeGrp.clearSelection();
-		
-		
+
 	}
+
 	private void onMenuClicked() {
-		
-		
+
 		this.dispose();
 		new MenuMain(user);
 	}
@@ -298,32 +305,32 @@ public class WelcomeNDeposit extends JFrame implements ActionListener {
 		} else if (e.getSource() == community) {
 			this.onCommunityClicked();
 		} else if (e.getSource() == depositButton) {
-			this.onDepositClicked();
+			this.onDepositClicked(rs);
 		} else if (e.getSource() == anotherAcct) {
 			this.onAnotherAcctClicked();
 		} else if (e.getSource() == mainMenu) {
 			this.onMenuClicked();
 		}
-		try {
-			psmt = con.prepareStatement("select * from Accounts WHERE id=?;");
-			psmt.setInt(1, userid);
-			 
-			rs = psmt.executeQuery();
-			new Account (rs); 
-			while (rs.next()) {
-				new Account (rs); 
-				break; 
-			}
-			
-			
-		}catch(Exception e1) {
-			
-		}
+//		try {
+//			psmt = con.prepareStatement("select * from Accounts where id =? in;");
+//			psmt.setInt(1, userid);
+//			
+//			rs = psmt.executeQuery();
+//			new Account (rs); 
+//			while (rs.next()) {
+//				new Account (rs); 
+//				break; 
+//			}
+//			
+//			
+//		}catch(Exception e1) {
+//			
+//		}
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new WelcomeNDeposit(null);
+		new WelcomeNDeposit(user);
 
 	}
 

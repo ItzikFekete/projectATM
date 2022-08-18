@@ -24,9 +24,10 @@ public class RegistrationForm extends JFrame implements ActionListener {
 
 	ResultSet rs;
 	PreparedStatement pst ;
-	PreparedStatement pst2; 
+	Statement stmt;  
 	LoginPage loginForm;  
 	WelcomeNDeposit welcomePage; 
+	LoginPage loginpage; 
 
 	JFrame regInput = new JFrame();
 	JLabel dob, titleL, fNameL, lNameL, companyL, communityL, addL, cityL, postcodeL, emailL, passwordL;
@@ -202,8 +203,8 @@ public class RegistrationForm extends JFrame implements ActionListener {
 			this.dispose();
 			Connection con = Model.connect();
 			
-			String query = "insert into Users values(?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			
+			String query = "insert into Users values(?,?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			User user; 
 
 			try {
 				pst = con.prepareStatement(query);
@@ -218,12 +219,21 @@ public class RegistrationForm extends JFrame implements ActionListener {
 				pst.setInt(10, Integer.parseInt((String) years.getSelectedItem().toString()));
 				pst.setString(11, emailT.getText());
 				pst.setString(12, passwordT.getText());
+				pst.setString(13, User.pAccName);
+				pst.setInt(14, User.pAccNum);
+				pst.setInt(15, User.pAccBlnce);
+				pst.setString(16, User.busAccName); 
+				pst.setInt(17, User.bAccNum);
+				pst.setInt(17, User.bAccBlnce);
+				pst.setString(18, User.cAccName);
+				pst.setInt(19, User.cAccNum);
+				pst.setInt(20, User.cAccBlnce);
 				
 				pst.execute();
 //				con.close();
 				System.out.print("registered");
 				
-				new WelcomeNDeposit(null); 
+				new LoginPage();
 //				String query2 = "insert into detailsAtm values (?,?)"; 
 //				pst2 = con.prepareStatement(query2);
 //				pst2.setString(2, companyText.getText());

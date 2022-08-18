@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="rs"/>
+		<item key="selection" value="Deposit"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="Deposit"/>
+			<item value="please"/>
+			<item value="trnsfrWithdrw"/>
+			<item value="total"/>
 			<item value="rs"/>
-			<item value="coName"/>
-			<item value="bAccName"/>
-			<item value="companyName"/>
-			<item value="communityName"/>
-			<item value="orgName"/>
-			<item value="personalAcc"/>
-			<item value="acounts"/>
+			<item value="account2Ba"/>
+			<item value="acc1blnc"/>
 			<item value="amount"/>
-			<item value="user"/>
-			<item value="user.con"/>
-			<item value="con"/>
-			<item value="actionPerformed"/>
-			<item value="stmt"/>
-			<item value="executeQuery"/>
+			<item value="account2Balance"/>
+			<item value="acc2Blnc"/>
+			<item value="acc1Blnc"/>
+			<item value="baccbl"/>
+			<item value="baccbalance"/>
+			<item value="bus2RB2"/>
+			<item value="account3RB2"/>
 		</list>
 		<list key="replacehistory">
+			<item value="busRB2"/>
+			<item value="comRB2"/>
+			<item value="comRB1"/>
+			<item value="busRB1"/>
+			<item value="busRB!"/>
+			<item value="personalRB2"/>
+			<item value="personalRB1"/>
 			<item value=""/>
 			<item value="depositLabel"/>
 			<item value="otherAccountL"/>
@@ -33,18 +40,11 @@
 			<item value="balanceAcc1"/>
 			<item value="accountNo1"/>
 			<item value="account1NameNumber"/>
-			<item value="accoun1Name"/>
-			<item value="overdraftP"/>
-			<item value="overdraft"/>
-			<item value="this"/>
-			<item value="JPanel"/>
-			<item value="messageAndOptions"/>
-			<item value="userLName"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="935"/>
-		<item key="DIALOG_Y_ORIGIN" value="84"/>
+		<item key="DIALOG_X_ORIGIN" value="919"/>
+		<item key="DIALOG_Y_ORIGIN" value="239"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
